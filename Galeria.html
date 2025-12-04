@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Galería Interactiva Moderna</title>
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #1f1c2c, #928dab);
+        min-height: 100vh;
+        margin: 0;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+    }
+
+    h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        animation: fadeDown 0.8s ease;
+    }
+
+    #image {
+        width: 70%;
+        height: 400px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 22px;
+        color: #fff;
+        transition: background-image 0.5s ease-in-out, 
+                    transform 0.4s ease, 
+                    box-shadow 0.4s ease;
+        animation: fadeUp 1s ease;
+        background-size: cover;
+        background-position: center;
+        padding: 20px;
+    }
+
+    #image:hover {
+        transform: scale(1.02);
+        box-shadow: 0px 20px 45px rgba(0, 0, 0, 0.4);
+    }
+
+    .preview {
+        width: 170px;
+        height: 120px;
+        margin: 15px;
+        border-radius: 15px;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        object-fit: cover;
+        animation: fadeIn 1s ease;
+    }
+
+    .preview:hover {
+        transform: scale(1.15) rotate(1deg);
+        box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeDown {
+        from { opacity: 0; transform: translateY(-40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+</style>
+
+</head>
+<body>
+
+<h2>Galería Interactiva Moderna</h2>
+
+<div id="image">Pase el ratón por encima de una imagen para mostrarla aquí</div>
+
+<img class="preview" src="https://picsum.photos/id/1015/300/200" 
+     alt="Montañas y Lago en Amanecer" 
+     onmouseover="upDate(this)" 
+     onmouseout="deshacer()">
+
+<img class="preview" src="https://picsum.photos/id/1025/300/200" 
+     alt="Husky con Mirada Intensa" 
+     onmouseover="upDate(this)" 
+     onmouseout="deshacer()">
+
+<img class="preview" src="https://picsum.photos/id/1043/300/200" 
+     alt="Bosque Cubierto de Nieve" 
+     onmouseover="upDate(this)" 
+     onmouseout="deshacer()">
+
+<script>
+    function upDate(previewPic) {
+        const imageDiv = document.getElementById("image");
+
+        imageDiv.textContent = previewPic.alt;
+        imageDiv.style.backgroundImage = `url('${previewPic.src}')`;
+
+        imageDiv.style.animation = "fadeUp 0.6s ease";
+    }
+
+    function deshacer() {
+        const imageDiv = document.getElementById("image");
+
+        imageDiv.style.backgroundImage = "url('')";
+        imageDiv.textContent = 
+            "Pase el ratón por encima de una imagen para mostrarla aquí";
+
+        imageDiv.style.animation = "fadeIn 0.6s ease";
+    }
+</script>
+
+</body>
+</html>
