@@ -5,6 +5,7 @@
 <title>Galería Interactiva Moderna</title>
 
 <style>
+   
     body {
         font-family: 'Segoe UI', sans-serif;
         background: linear-gradient(135deg, #1f1c2c, #928dab);
@@ -37,8 +38,8 @@
         text-align: center;
         font-size: 22px;
         color: #fff;
-        transition: background-image 0.5s ease-in-out, 
-                    transform 0.4s ease, 
+        transition: background-image 0.5s ease-in-out,
+                    transform 0.4s ease,
                     box-shadow 0.4s ease;
         animation: fadeUp 1s ease;
         background-size: cover;
@@ -63,11 +64,14 @@
         animation: fadeIn 1s ease;
     }
 
-    .preview:hover {
+    .preview:hover,
+    .preview:focus {
         transform: scale(1.15) rotate(1deg);
         box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.4);
+        outline: none;
     }
 
+    
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
@@ -82,7 +86,6 @@
         from { opacity: 0; transform: translateY(-40px); }
         to { opacity: 1; transform: translateY(0); }
     }
-
 </style>
 
 </head>
@@ -92,20 +95,30 @@
 
 <div id="image">Pase el ratón por encima de una imagen para mostrarla aquí</div>
 
-<img class="preview" src="https://picsum.photos/id/1015/300/200" 
-     alt="Montañas y Lago en Amanecer" 
-     onmouseover="upDate(this)" 
-     onmouseout="deshacer()">
 
-<img class="preview" src="https://picsum.photos/id/1025/300/200" 
-     alt="Husky con Mirada Intensa" 
-     onmouseover="upDate(this)" 
-     onmouseout="deshacer()">
+<img class="preview" src="https://picsum.photos/id/1015/300/200"
+     alt="Montañas y lago al amanecer"
+     onmouseover="upDate(this)" onmouseout="deshacer()">
 
-<img class="preview" src="https://picsum.photos/id/1043/300/200" 
-     alt="Bosque Cubierto de Nieve" 
-     onmouseover="upDate(this)" 
-     onmouseout="deshacer()">
+<img class="preview" src="https://picsum.photos/id/1025/300/200"
+     alt="Husky con mirada intensa"
+     onmouseover="upDate(this)" onmouseout="deshacer()">
+
+<img class="preview" src="https://picsum.photos/id/1043/300/200"
+     alt="Bosque cubierto de nieve"
+     onmouseover="upDate(this)" onmouseout="deshacer()">
+
+<img class="preview" src="https://picsum.photos/id/1059/300/200"
+     alt="Carretera entre colinas verdes"
+     onmouseover="upDate(this)" onmouseout="deshacer()">
+
+<img class="preview" src="https://picsum.photos/id/1074/300/200"
+     alt="Playa al atardecer con olas suaves"
+     onmouseover="upDate(this)" onmouseout="deshacer()">
+
+<img class="preview" src="https://picsum.photos/id/1084/300/200"
+     alt="Ciudad iluminada durante la noche"
+     onmouseover="upDate(this)" onmouseout="deshacer()">
 
 <script>
     function upDate(previewPic) {
@@ -113,19 +126,41 @@
 
         imageDiv.textContent = previewPic.alt;
         imageDiv.style.backgroundImage = `url('${previewPic.src}')`;
-
         imageDiv.style.animation = "fadeUp 0.6s ease";
+
+        console.log("Activado (mouse/focus):", previewPic.alt);
     }
 
     function deshacer() {
         const imageDiv = document.getElementById("image");
 
         imageDiv.style.backgroundImage = "url('')";
-        imageDiv.textContent = 
-            "Pase el ratón por encima de una imagen para mostrarla aquí";
-
+        imageDiv.textContent = "Pase el ratón por encima de una imagen para mostrarla aquí";
         imageDiv.style.animation = "fadeIn 0.6s ease";
+
+        console.log("Restaurado");
     }
+    function addTabFocus() {
+        console.log("onload → Se agregan tabindex y listeners");
+
+        const images = document.querySelectorAll(".preview");
+
+        for (let i = 0; i < images.length; i++) {
+
+            images[i].setAttribute("tabindex", "0");
+
+            // onfocus → igual que onmouseover
+            images[i].addEventListener("focus", function() {
+                upDate(images[i]);
+            });
+
+            // onblur → igual que onmouseout
+            images[i].addEventListener("blur", function() {
+                deshacer();
+            });
+        }
+    }
+    window.onload = addTabFocus;
 </script>
 
 </body>
